@@ -44,7 +44,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
@@ -71,26 +71,25 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 
 static const char *termcmd[]  = { "st", NULL };
-static const char *telegram[] = { "telegram", NULL };
+static const char *telegram[] = { "telegram-desktop", NULL };
 static const char *obsidian[] = { "obsidian", NULL };
 static const char *copyq[] = { "copyq", "clipboard", NULL };
 static const char *flameshot[] = { "flameshot", "gui", NULL };
+static const char *browser[] = {"chromium", NULL}; 
 
-static const char *suspend[] = { "loginctl", "suspend", NULL };
-static const char *reboot[] = { "loginctl", "reboot", NULL };
-static const char *poweroff[] = { "loginctl", "poweroff", NULL };
+static const char *suspend[] = { "systemctl", "suspend", NULL };
+static const char *reboot[] = { "reboot", NULL };
+static const char *poweroff[] = { "poweroff", NULL };
 static const char *logout[] = { "logout_system", NULL };
 
-static const char *volume_mute[] = { "change_volume", "-m", NULL };
-static const char *volume_up[] = { "change_volume", "-i", NULL };
-static const char *volume_down[] = { "change_volume", "-d", NULL };
+static const char *volume_mute[] = { "/etc/nixos/dwm/scripts/change_volume", "-m", NULL };
+static const char *volume_up[] = { "/etc/nixos/dwm/scripts/change_volume", "-i", NULL };
+static const char *volume_down[] = { "/etc/nixos/dwm/scripts/change_volume", "-d", NULL };
 
-static const char *brightness_up[] = { "set_brightness", "-i", NULL };
-static const char *brightness_down[] = { "set_brightness", "-d", NULL };
+static const char *brightness_up[] = { "/etc/nixos/dwm/scripts/change_brightness", "-i", NULL };
+static const char *brightness_down[] = { "/etc/nixos/dwm/scripts/change_brightness", "-d", NULL };
 
-static const char *dwmstatus_restart[] = { "dwmstatus_restart", NULL };
-
-static const char *toggle_grey[] = {"toggle_grey", NULL};
+static const char *toggle_grey[] = {"/etc/nixos/dwm/scripts/toggle_grey", NULL};
 
 
 static const Key keys[] = {
@@ -101,9 +100,10 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_o,      spawn,          {.v = obsidian } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = copyq} },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = flameshot} },
+	{ MODKEY,                       XK_b,      spawn,          {.v = browser } },
 
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
-	{ MODKEY|Mod1Mask,              XK_h,      hideborder,     {0} },
+	{ MODKEY|Mod1Mask,              XK_b,      hideborder,     {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -120,22 +120,38 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 
-	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
-	{ MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
-	{ MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
-	{ MODKEY,                       XK_Left,   moveresize,     {.v = "-25x 0y 0w 0h" } },
-	{ MODKEY|ShiftMask,             XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
-	{ MODKEY|ShiftMask,             XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
-	{ MODKEY|ShiftMask,             XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
-	{ MODKEY|ShiftMask,             XK_Left,   moveresize,     {.v = "0x 0y -25w 0h" } },
-	{ MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
-	{ MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
-	{ MODKEY|ControlMask,           XK_Left,   moveresizeedge, {.v = "l"} },
-	{ MODKEY|ControlMask,           XK_Right,  moveresizeedge, {.v = "r"} },
-	{ MODKEY|ControlMask|ShiftMask, XK_Up,     moveresizeedge, {.v = "T"} },
-	{ MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
-	{ MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
-	{ MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
+	// { MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
+	// { MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
+	// { MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
+	// { MODKEY,                       XK_Left,   moveresize,     {.v = "-25x 0y 0w 0h" } },
+	// { MODKEY|ShiftMask,             XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
+	// { MODKEY|ShiftMask,             XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
+	// { MODKEY|ShiftMask,             XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
+	// { MODKEY|ShiftMask,             XK_Left,   moveresize,     {.v = "0x 0y -25w 0h" } },
+	// { MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
+	// { MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
+	// { MODKEY|ControlMask,           XK_Left,   moveresizeedge, {.v = "l"} },
+	// { MODKEY|ControlMask,           XK_Right,  moveresizeedge, {.v = "r"} },
+	// { MODKEY|ControlMask|ShiftMask, XK_Up,     moveresizeedge, {.v = "T"} },
+	// { MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
+	// { MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
+	// { MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
+	{ MODKEY|Mod1Mask,              XK_j,   moveresize,     	{.v = "0x 25y 0w 0h" } },
+	{ MODKEY|Mod1Mask,              XK_k,   moveresize,     	{.v = "0x -25y 0w 0h" } },
+	{ MODKEY|Mod1Mask,              XK_l,  	moveresize,    		{.v = "25x 0y 0w 0h" } },
+	{ MODKEY|Mod1Mask,              XK_h,   moveresize,     	{.v = "-25x 0y 0w 0h" } },
+	{ MODKEY|ShiftMask,             XK_j,   moveresize,     	{.v = "0x 0y 0w 25h" } },
+	{ MODKEY|ShiftMask,             XK_k,   moveresize,     	{.v = "0x 0y 0w -25h" } },
+	{ MODKEY|ShiftMask,             XK_l,  	moveresize,    		{.v = "0x 0y 25w 0h" } },
+	{ MODKEY|ShiftMask,             XK_h,   moveresize,     	{.v = "0x 0y -25w 0h" } },
+	{ MODKEY|ControlMask,           XK_k,   moveresizeedge, 	{.v = "t"} },
+	{ MODKEY|ControlMask,           XK_j,   moveresizeedge, 	{.v = "b"} },
+	{ MODKEY|ControlMask,           XK_h,   moveresizeedge, 	{.v = "l"} },
+	{ MODKEY|ControlMask,           XK_l,  	moveresizeedge,		{.v = "r"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_k, 	moveresizeedge, 	{.v = "T"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_j,   moveresizeedge, 	{.v = "B"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_h,   moveresizeedge, 	{.v = "L"} },
+	{ MODKEY|ControlMask|ShiftMask, XK_l,  	moveresizeedge,		{.v = "R"} },
 
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
@@ -153,9 +169,6 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-
-	{ ShiftMask,                    XK_Alt_L,  spawn,          {.v = dwmstatus_restart} },
-	{ Mod1Mask,                     XK_Shift_L,spawn,          {.v = dwmstatus_restart} },
 
 	{ MODKEY|Mod1Mask,              XK_s,      spawn,          {.v = suspend } },
 	{ MODKEY|Mod1Mask,              XK_r,      spawn,          {.v = reboot } },
