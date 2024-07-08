@@ -75,6 +75,7 @@ static const char *telegram[] = { "telegram-desktop", NULL };
 static const char *obsidian[] = { "obsidian", NULL };
 static const char *copyq[] = { "copyq", "clipboard", NULL };
 static const char *flameshot[] = { "flameshot", "gui", NULL };
+static const char *full_screenshot[] = { "flameshot", "full", NULL };
 static const char *browser[] = {"chromium", NULL}; 
 
 static const char *suspend[] = { "systemctl", "suspend", NULL };
@@ -120,22 +121,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 
-	// { MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
-	// { MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
-	// { MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
-	// { MODKEY,                       XK_Left,   moveresize,     {.v = "-25x 0y 0w 0h" } },
-	// { MODKEY|ShiftMask,             XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
-	// { MODKEY|ShiftMask,             XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
-	// { MODKEY|ShiftMask,             XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
-	// { MODKEY|ShiftMask,             XK_Left,   moveresize,     {.v = "0x 0y -25w 0h" } },
-	// { MODKEY|ControlMask,           XK_Up,     moveresizeedge, {.v = "t"} },
-	// { MODKEY|ControlMask,           XK_Down,   moveresizeedge, {.v = "b"} },
-	// { MODKEY|ControlMask,           XK_Left,   moveresizeedge, {.v = "l"} },
-	// { MODKEY|ControlMask,           XK_Right,  moveresizeedge, {.v = "r"} },
-	// { MODKEY|ControlMask|ShiftMask, XK_Up,     moveresizeedge, {.v = "T"} },
-	// { MODKEY|ControlMask|ShiftMask, XK_Down,   moveresizeedge, {.v = "B"} },
-	// { MODKEY|ControlMask|ShiftMask, XK_Left,   moveresizeedge, {.v = "L"} },
-	// { MODKEY|ControlMask|ShiftMask, XK_Right,  moveresizeedge, {.v = "R"} },
 	{ MODKEY|Mod1Mask,              XK_j,   moveresize,     	{.v = "0x 25y 0w 0h" } },
 	{ MODKEY|Mod1Mask,              XK_k,   moveresize,     	{.v = "0x -25y 0w 0h" } },
 	{ MODKEY|Mod1Mask,              XK_l,  	moveresize,    		{.v = "25x 0y 0w 0h" } },
@@ -185,6 +170,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_x,      movecenter,     {0} },
 
 	{ MODKEY,			XK_g,			spawn,	{.v = toggle_grey} },
+	{ 0,         			XK_Print, 		spawn, 	{.v = full_screenshot} },
 };
 
 /* button definitions */ /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */ static const Button buttons[] = {
