@@ -3,7 +3,7 @@ killall picom
 sleep .1
 if [[ $is_grey ]];
 then
-	picom --config ~/.config/picom.conf --backend glx -b
+	picom --backend glx -b
 else
-	picom --config ~/.config/picom.conf --backend glx --window-shader-fg ~/.config/shader -b
+	picom --backend glx --window-shader-fg /etc/nixos/dwm/scripts/grey-shader -b
 fi
