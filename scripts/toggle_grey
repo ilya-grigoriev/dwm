@@ -5,5 +5,5 @@ if [[ $is_grey ]];
 then
 	picom --backend glx -b
 else
-	picom --backend glx --window-shader-fg /etc/nixos/dwm/scripts/grey-shader -b
+	picom --backend glx --window-shader-fg /etc/nixos/modules/dwm/scripts/grey-shader -b
 fi
