@@ -83,14 +83,14 @@ static const char *reboot[] = { "reboot", NULL };
 static const char *poweroff[] = { "poweroff", NULL };
 static const char *logout[] = { "logout_system", NULL };
 
-static const char *volume_mute[] = { "/etc/nixos/dwm/scripts/change_volume", "-m", NULL };
-static const char *volume_up[] = { "/etc/nixos/dwm/scripts/change_volume", "-i", NULL };
-static const char *volume_down[] = { "/etc/nixos/dwm/scripts/change_volume", "-d", NULL };
+static const char *volume_mute[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
+static const char *volume_up[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *volume_down[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
 
-static const char *brightness_up[] = { "/etc/nixos/dwm/scripts/change_brightness", "-i", NULL };
-static const char *brightness_down[] = { "/etc/nixos/dwm/scripts/change_brightness", "-d", NULL };
+static const char *brightness_up[] = { "brightnessctl", "set", "+2%", NULL };
+static const char *brightness_down[] = { "brightnessctl", "set", "2%-", NULL };
 
-static const char *toggle_grey[] = {"/etc/nixos/dwm/scripts/toggle_grey", NULL};
+static const char *toggle_grey[] = {"/etc/nixos/modules/dwm/scripts/toggle_grey", NULL};
 
 
 static const Key keys[] = {
