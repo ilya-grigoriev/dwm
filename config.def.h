@@ -5,7 +5,8 @@
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
-static const char *fonts[]          = { "JetBrains Mono:size=12" };
+/* static const char *fonts[]          = { "JetBrains Mono:size=12" }; */
+static const char *fonts[]          = { "Iosevka Extended:style=Bold Extended:size=12" };
 static const char dmenufont[]       = "monospace:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -76,7 +77,7 @@ static const char *obsidian[] = { "obsidian", NULL };
 static const char *copyq[] = { "copyq", "clipboard", NULL };
 static const char *flameshot[] = { "flameshot", "gui", NULL };
 static const char *full_screenshot[] = { "flameshot", "full", NULL };
-static const char *browser[] = {"chromium", NULL}; 
+static const char *browser[] = {"qutebrowser", NULL}; 
 
 static const char *suspend[] = { "systemctl", "suspend", NULL };
 static const char *reboot[] = { "reboot", NULL };
