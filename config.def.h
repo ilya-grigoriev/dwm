@@ -77,7 +77,7 @@ static const char *obsidian[] = { "obsidian", NULL };
 static const char *copyq[] = { "copyq", "clipboard", NULL };
 static const char *flameshot[] = { "flameshot", "gui", NULL };
 static const char *full_screenshot[] = { "flameshot", "full", NULL };
-static const char *browser[] = {"qutebrowser", NULL}; 
+static const char *browser[] = {"thorium-browser", NULL}; 
 
 static const char *suspend[] = { "systemctl", "suspend", NULL };
 static const char *reboot[] = { "reboot", NULL };
@@ -90,8 +90,6 @@ static const char *volume_down[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@
 
 static const char *brightness_up[] = { "brightnessctl", "set", "+2%", NULL };
 static const char *brightness_down[] = { "brightnessctl", "set", "2%-", NULL };
-
-static const char *toggle_grey[] = {"/etc/nixos/modules/dwm/scripts/toggle_grey", NULL};
 
 
 static const Key keys[] = {
@@ -168,10 +166,9 @@ static const Key keys[] = {
 	{ 0,                            XF86XK_MonBrightnessUp,    spawn, {.v = brightness_up} },
 	{ 0,                            XF86XK_MonBrightnessDown,  spawn, {.v = brightness_down} },
 
-	{ MODKEY,                       XK_x,      movecenter,     {0} },
+	{ MODKEY,                       XK_x,      		movecenter,     {0} },
 
-	{ MODKEY,			XK_g,			spawn,	{.v = toggle_grey} },
-	{ 0,         			XK_Print, 		spawn, 	{.v = full_screenshot} },
+	{ 0,         					XK_Print, 		spawn, 			{.v = full_screenshot} },
 };
 
 /* button definitions */ /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */ static const Button buttons[] = {
