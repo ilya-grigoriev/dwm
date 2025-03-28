@@ -91,6 +91,10 @@ static const char *volume_down[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@
 static const char *brightness_up[] = { "brightnessctl", "set", "+2%", NULL };
 static const char *brightness_down[] = { "brightnessctl", "set", "2%-", NULL };
 
+static const char *toggle_grey[] = {"picom --backend glx --window-shader-fg /home/ilya/.config/picom/grayscale", NULL};
+
+static const char *bluetooth[] = {"st", "-a", "-e", "bluetuith", NULL};
+
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -101,6 +105,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_v,      spawn,          {.v = copyq} },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = flameshot} },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browser } },
+	{ MODKEY|ControlMask,			XK_b,	   spawn,		   {.v = bluetooth } },
 
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY|Mod1Mask,              XK_b,      hideborder,     {0} },
@@ -168,6 +173,7 @@ static const Key keys[] = {
 
 	{ MODKEY,                       XK_x,      		movecenter,     {0} },
 
+	{ MODKEY,						XK_g,			spawn,			{.v = toggle_grey} },
 	{ 0,         					XK_Print, 		spawn, 			{.v = full_screenshot} },
 };
 
