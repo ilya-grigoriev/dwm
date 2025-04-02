@@ -75,7 +75,6 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *telegram[] = { "telegram-desktop", NULL };
 static const char *obsidian[] = { "obsidian", NULL };
 static const char *copyq[] = { "copyq", "clipboard", NULL };
-static const char *flameshot[] = { "flameshot", "gui", NULL };
 static const char *full_screenshot[] = { "flameshot", "full", NULL };
 static const char *browser[] = {"thorium-browser", NULL}; 
 
@@ -94,6 +93,7 @@ static const char *brightness_down[] = { "brightnessctl", "set", "2%-", NULL };
 static const char *toggle_grey[] = {"picom --backend glx --window-shader-fg /home/ilya/.config/picom/grayscale", NULL};
 
 static const char *bluetooth[] = {"st", "-a", "-e", "bluetuith", NULL};
+static const char *wifi[] = {"st", "-a", "-e", "sudo", "iwctl", NULL};
 
 
 static const Key keys[] = {
@@ -103,9 +103,10 @@ static const Key keys[] = {
 	{ Mod1Mask,                     XK_t,      spawn,          {.v = telegram } },
 	{ MODKEY,                       XK_o,      spawn,          {.v = obsidian } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = copyq} },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = flameshot} },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("flameshot gui --raw | xclip -t image/png -sel clipboard") },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browser } },
 	{ MODKEY|ControlMask,			XK_b,	   spawn,		   {.v = bluetooth } },
+	{ MODKEY,						XK_w,	   spawn,		   {.v = wifi } },
 
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY|Mod1Mask,              XK_b,      hideborder,     {0} },
